@@ -3,3 +3,8 @@ version: 0.0.1
 author: YonatanWN
 main: com.yonatanwn.presidentialvoting.Vote
 api-version: 1.16
+
+commands:
+  race:
+    description: allows for the manipulation of a race
+    usage: /race
