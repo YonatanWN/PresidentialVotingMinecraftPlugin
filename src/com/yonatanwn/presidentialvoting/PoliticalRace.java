@@ -18,6 +18,7 @@ public class PoliticalRace {
     public void addCandidate(Player player){
         candidates.add(player);
     }
+
     public void removeCandidate(Player player){
         if(candidates.contains(player)){
             candidates.remove(player);
