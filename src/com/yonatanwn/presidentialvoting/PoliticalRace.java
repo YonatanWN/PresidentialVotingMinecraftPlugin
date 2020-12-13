@@ -10,8 +10,7 @@ public class PoliticalRace {
     private String positionName;
     private ArrayList candidates;
 
-    public PoliticalRace(String positionName, int maxAmountOfCandidates){
-        this.positionName = positionName;
+    public PoliticalRace(int maxAmountOfCandidates){
         this.maxAmountofCandidates = maxAmountOfCandidates;
         this.candidates = new ArrayList<Player>();
     }
