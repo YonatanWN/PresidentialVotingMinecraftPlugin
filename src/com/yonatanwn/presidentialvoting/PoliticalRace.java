@@ -12,15 +12,15 @@ public class PoliticalRace {
 
     public PoliticalRace(int maxAmountOfCandidates){
         this.maxAmountofCandidates = maxAmountOfCandidates;
-        this.candidates = new ArrayList<Player>();
+        this.candidates = new ArrayList<Candidate>();
     }
-    public void addCandidate(Player player){
-        candidates.add(player);
+    public void addCandidate(Candidate candidate){
+        candidates.add(candidate);
     }
 
-    public void removeCandidate(Player player){
-        if(candidates.contains(player)){
-            candidates.remove(player);
+    public void removeCandidate(Candidate candidate){
+        if(candidates.contains(candidate)){
+            candidates.remove(candidate);
         }
     }
 

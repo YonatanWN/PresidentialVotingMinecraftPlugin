@@ -4,7 +4,6 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.craftbukkit.libs.it.unimi.dsi.fastutil.Hash;
 
 import java.util.HashMap;
 
@@ -12,6 +11,10 @@ import java.util.HashMap;
 public class Race implements CommandExecutor {
     private HashMap<String, PoliticalRace> raceList = new HashMap<>();
     private CommandSender commandSender;
+    private Vote vote;
+    public Race(Vote vote){
+        this.vote = vote;
+    }
 
     @Override
     public boolean onCommand(CommandSender commandSender, Command command, String label, String[] args) {
@@ -51,6 +54,9 @@ public class Race implements CommandExecutor {
         }catch (NumberFormatException ex){
             commandSender.sendMessage(ChatColor.RED + "The maximum amount of candidates must be an Integer.");
         }
+    }
+    public HashMap<String, PoliticalRace> getRaceList(){
+        return raceList;
     }
 
 
