@@ -29,31 +29,58 @@ public class Race implements CommandExecutor {
     }
 
     private void parseFirstSubCommand(String[] args) {
-        switch(args[1]){
+        switch(args[0]){
             case "create":
-                processCreateRace(args);
+                if(validateCreateRace(args)){
+                    processCreateRace(args);
+                }
+
+
             case "close":
                 break;
             case "add":
                 break;
             case "remove":
                 break;
+            default:
+                commandSender.sendMessage("There was an issue parsing the command. Please try again in the form /race <subcommand> <args>");
         }
     }
 
-    private void processCreateRace(String[] args) {
-        try{
-            int maxCandidates = Integer.parseInt(args[3]);
-            String raceName = args[2];
-            if(raceList.containsKey(raceName)){
-                commandSender.sendMessage(ChatColor.RED + "A race with the name "+ raceName + " already exists.");
-            }else {
-                raceList.put(raceName, new PoliticalRace(maxCandidates));
-            }
-
-        }catch (NumberFormatException ex){
-            commandSender.sendMessage(ChatColor.RED + "The maximum amount of candidates must be an Integer.");
+    private boolean validateCreateRace(String[] args) {
+        if(args.length != 2 || !isPositveInteger(args[1])) {
+            return false;
         }
+        return true;
+    }
+
+    private boolean isPositveInteger(String commandInt) {
+        try{
+            int integer = Integer.parseInt(commandInt);
+            if(integer >= 0){
+                return true;
+            }else {
+                return false;
+            }
+        }catch (NumberFormatException e){
+            return false;
+        }
+
+
+    }
+
+    private void processCreateRace(String[] args) {
+
+
+
+        String racename = args[0];
+        int raceMaxCandidates = Integer.parseInt(args[1]);
+
+
+
+
+
+
     }
     public HashMap<String, PoliticalRace> getRaceList(){
         return raceList;
