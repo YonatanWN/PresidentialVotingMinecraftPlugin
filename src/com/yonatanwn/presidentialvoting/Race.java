@@ -6,6 +6,7 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
 import java.util.HashMap;
+import java.util.Locale;
 
 
 public class Race implements CommandExecutor {
@@ -34,8 +35,6 @@ public class Race implements CommandExecutor {
                 if(validateCreateRace(args)){
                     processCreateRace(args);
                 }
-
-
             case "close":
                 break;
             case "add":
@@ -48,10 +47,18 @@ public class Race implements CommandExecutor {
     }
 
     private boolean validateCreateRace(String[] args) {
-        if(args.length != 2 || !isPositveInteger(args[1])) {
+        if(args.length != 2){
+            commandSender.sendMessage(ChatColor.RED + "There is an invalid amount of arguments.");
             return false;
+        }else if(!isPositveInteger(args[1])){
+            commandSender.sendMessage(ChatColor.RED + "The maximum amount of allowed candidates must be a valid integer");
+            return false;
+        }else if(raceList.containsKey(args[0].toLowerCase())){
+            commandSender.sendMessage(ChatColor.RED + "There is already a list by that name");
+            return false;
+        }else{
+            return true;
         }
-        return true;
     }
 
     private boolean isPositveInteger(String commandInt) {
@@ -70,18 +77,14 @@ public class Race implements CommandExecutor {
     }
 
     private void processCreateRace(String[] args) {
-
-
-
-        String racename = args[0];
+        String racename = args[0].toLowerCase();
         int raceMaxCandidates = Integer.parseInt(args[1]);
-
-
-
-
-
+        raceList.put(racename,new PoliticalRace(raceMaxCandidates));
 
     }
+
+
+
     public HashMap<String, PoliticalRace> getRaceList(){
         return raceList;
     }
