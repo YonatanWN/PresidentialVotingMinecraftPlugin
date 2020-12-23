@@ -47,14 +47,14 @@ public class Race implements CommandExecutor {
     }
 
     private boolean validateCreateRace(String[] args) {
-        if(args.length != 2){
+        if(args.length != 3){
             commandSender.sendMessage(ChatColor.RED + "There is an invalid amount of arguments.");
             return false;
-        }else if(!isPositveInteger(args[1])){
+        }else if(!isPositveInteger(args[2])){
             commandSender.sendMessage(ChatColor.RED + "The maximum amount of allowed candidates must be a valid integer");
             return false;
-        }else if(raceList.containsKey(args[0].toLowerCase())){
-            commandSender.sendMessage(ChatColor.RED + "There is already a list by that name");
+        }else if(raceList.containsKey(args[1].toLowerCase())){
+            commandSender.sendMessage(ChatColor.RED + "There is already a race by that name");
             return false;
         }else{
             return true;
@@ -77,8 +77,8 @@ public class Race implements CommandExecutor {
     }
 
     private void processCreateRace(String[] args) {
-        String racename = args[0].toLowerCase();
-        int raceMaxCandidates = Integer.parseInt(args[1]);
+        String racename = args[1].toLowerCase();
+        int raceMaxCandidates = Integer.parseInt(args[2]);
         raceList.put(racename,new PoliticalRace(raceMaxCandidates));
 
     }
