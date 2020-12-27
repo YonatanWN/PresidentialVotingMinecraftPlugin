@@ -32,10 +32,13 @@ public class Race implements CommandExecutor {
     private void parseFirstSubCommand(String[] args) {
         switch(args[0]){
             case "create":
-                if(validateCreateRace(args)){
+                if(isvalidCreateRace(args)){
                     processCreateRace(args);
                 }
             case "close":
+                if(isvalidCloseRace(args)){
+                    processCloseRace(args);
+                }
                 break;
             case "add":
                 break;
@@ -46,7 +49,15 @@ public class Race implements CommandExecutor {
         }
     }
 
-    private boolean validateCreateRace(String[] args) {
+    private void processCloseRace(String[] args) {
+        for(String key : raceList.keySet()){
+            if(args[1] == key){
+                commandSender.sendMessage("It's here");
+            }
+        }
+    }
+
+    private boolean isvalidCreateRace(String[] args) {
         if(args.length != 3){
             commandSender.sendMessage(ChatColor.RED + "There is an invalid amount of arguments.");
             return false;
@@ -59,6 +70,15 @@ public class Race implements CommandExecutor {
         }else{
             return true;
         }
+    }
+    private boolean isvalidCloseRace(String[] args){
+        if(raceList.containsKey(args[1])){
+            return true;
+        }else{
+            commandSender.sendMessage(ChatColor.RED + "A race does not exist by that name.");
+            return false;
+        }
+
     }
 
     private boolean isPositveInteger(String commandInt) {
@@ -80,7 +100,6 @@ public class Race implements CommandExecutor {
         String racename = args[1].toLowerCase();
         int raceMaxCandidates = Integer.parseInt(args[2]);
         raceList.put(racename,new PoliticalRace(raceMaxCandidates));
-
     }
 
 
