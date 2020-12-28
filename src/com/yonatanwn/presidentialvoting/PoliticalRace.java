@@ -8,7 +8,7 @@ public class PoliticalRace {
 
     private int maxAmountofCandidates;
     private String positionName;
-    private ArrayList candidates;
+    private ArrayList<Candidate> candidates;
 
     public PoliticalRace(int maxAmountOfCandidates){
         this.maxAmountofCandidates = maxAmountOfCandidates;
@@ -23,6 +23,8 @@ public class PoliticalRace {
             candidates.remove(candidate);
         }
     }
-
+    public ArrayList<Candidate> getCandidates(){
+        return candidates;
+    }
 
 }

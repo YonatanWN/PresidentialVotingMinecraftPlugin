@@ -52,7 +52,10 @@ public class Race implements CommandExecutor {
     private void processCloseRace(String[] args) {
         for(String key : raceList.keySet()){
             if(args[1] == key){
-                commandSender.sendMessage("It's here");
+                PoliticalRace politicalRace = raceList.get(args[1]);
+                for(Candidate candidate: politicalRace.getCandidates()) {
+                    commandSender.sendMessage(ChatColor.GREEN + candidate.toString());
+                }
             }
         }
     }
