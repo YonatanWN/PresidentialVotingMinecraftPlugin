@@ -1,9 +1,11 @@
 package com.yonatanwn.presidentialvoting;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 import java.util.Locale;
@@ -41,12 +43,33 @@ public class Race implements CommandExecutor {
                 }
                 break;
             case "add":
+                if(isvalidAdd(args)){
+                    processAdd(args);
+                }
                 break;
             case "remove":
                 break;
             default:
                 commandSender.sendMessage("There was an issue parsing the command. Please try again in the form /race <subcommand> <args>");
         }
+    }
+
+    private void processAdd(String[] args) {
+    }
+
+    private boolean isvalidAdd(String[] args) {
+        if(args.length != 2){
+            return false;
+        }else{
+            if(Bukkit.getPlayer(args[2]) != null && raceList.get(args[1]).getCandidates().size() < raceList.get(args[1]).getMaxAmountOfCandidates() ){
+                return true;
+            }else{
+                return false;
+            }
+
+        }
+
+
     }
 
     private void processCloseRace(String[] args) {
@@ -64,7 +87,7 @@ public class Race implements CommandExecutor {
         if(args.length != 3){
             commandSender.sendMessage(ChatColor.RED + "There is an invalid amount of arguments.");
             return false;
-        }else if(!isPositveInteger(args[2])){
+        }else if(!isPositiveInteger(args[2])){
             commandSender.sendMessage(ChatColor.RED + "The maximum amount of allowed candidates must be a valid integer");
             return false;
         }else if(raceList.containsKey(args[1].toLowerCase())){
@@ -75,16 +98,21 @@ public class Race implements CommandExecutor {
         }
     }
     private boolean isvalidCloseRace(String[] args){
-        if(raceList.containsKey(args[1])){
-            return true;
-        }else{
-            commandSender.sendMessage(ChatColor.RED + "A race does not exist by that name.");
+        if(args.length != 2){
             return false;
+        }else{
+            if(raceList.containsKey(args[1])){
+                return true;
+            }else{
+                commandSender.sendMessage(ChatColor.RED + "A race does not exist by that name.");
+                return false;
+            }
         }
+
 
     }
 
-    private boolean isPositveInteger(String commandInt) {
+    private boolean isPositiveInteger(String commandInt) {
         try{
             int integer = Integer.parseInt(commandInt);
             if(integer >= 0){
@@ -95,7 +123,6 @@ public class Race implements CommandExecutor {
         }catch (NumberFormatException e){
             return false;
         }
-
 
     }
 

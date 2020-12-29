@@ -2,21 +2,23 @@ package com.yonatanwn.presidentialvoting;
 
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
+
 public class Candidate {
 
     private Player player;
-    private int votes;
+    private ArrayList<Player> votes;
 
     public Candidate(Player player){
         this.player = player;
-        this.votes = 0;
+        votes = new ArrayList<Player>();
     }
-    public void vote(){
-        votes++;
+    public void vote(Player player){
+        votes.add(player);
     }
 
     public String toString(){
-       return "The player " + player.getName() + " has " + votes + " vote(s).";
+       return "The player " + player.getName() + " has " + votes.size() + " vote(s).";
     }
 
 

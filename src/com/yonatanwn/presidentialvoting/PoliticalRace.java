@@ -6,12 +6,12 @@ import java.util.ArrayList;
 
 public class PoliticalRace {
 
-    private int maxAmountofCandidates;
+    private int maxAmountOfCandidates;
     private String positionName;
     private ArrayList<Candidate> candidates;
 
     public PoliticalRace(int maxAmountOfCandidates){
-        this.maxAmountofCandidates = maxAmountOfCandidates;
+        this.maxAmountOfCandidates = maxAmountOfCandidates;
         this.candidates = new ArrayList<Candidate>();
     }
     public void addCandidate(Candidate candidate){
@@ -22,6 +22,9 @@ public class PoliticalRace {
         if(candidates.contains(candidate)){
             candidates.remove(candidate);
         }
+    }
+    public int getMaxAmountOfCandidates(){
+        return maxAmountOfCandidates;
     }
     public ArrayList<Candidate> getCandidates(){
         return candidates;
