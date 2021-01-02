@@ -7,7 +7,6 @@ import java.util.ArrayList;
 public class PoliticalRace {
 
     private int maxAmountOfCandidates;
-    private String positionName;
     private ArrayList<Candidate> candidates;
 
     public PoliticalRace(int maxAmountOfCandidates){
@@ -23,6 +22,9 @@ public class PoliticalRace {
             candidates.remove(candidate);
         }
     }
+
+
+
     public int getMaxAmountOfCandidates(){
         return maxAmountOfCandidates;
     }

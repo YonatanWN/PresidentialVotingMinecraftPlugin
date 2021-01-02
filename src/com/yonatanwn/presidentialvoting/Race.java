@@ -37,6 +37,7 @@ public class Race implements CommandExecutor {
                 if(isvalidCreateRace(args)){
                     processCreateRace(args);
                 }
+                break;
             case "close":
                 if(isvalidCloseRace(args)){
                     processCloseRace(args);
@@ -47,6 +48,9 @@ public class Race implements CommandExecutor {
                     processAdd(args);
                 }
                 break;
+            case "list":
+                processList();
+                break;
             case "remove":
                 break;
             default:
@@ -54,7 +58,14 @@ public class Race implements CommandExecutor {
         }
     }
 
+    private void processList() {
+        for(String key: raceList.keySet()){
+            commandSender.sendMessage(key + ": " + raceList.get(key).getMaxAmountOfCandidates()+ " candidate maximum" );
+        }
+    }
+
     private void processAdd(String[] args) {
+        commandSender.sendMessage("This add command wil be processed");
     }
 
     private boolean isvalidAdd(String[] args) {
@@ -99,6 +110,7 @@ public class Race implements CommandExecutor {
     }
     private boolean isvalidCloseRace(String[] args){
         if(args.length != 2){
+            commandSender.sendMessage(ChatColor.RED + "There is an invalid amount of arguments.");
             return false;
         }else{
             if(raceList.containsKey(args[1])){
@@ -130,6 +142,7 @@ public class Race implements CommandExecutor {
         String racename = args[1].toLowerCase();
         int raceMaxCandidates = Integer.parseInt(args[2]);
         raceList.put(racename,new PoliticalRace(raceMaxCandidates));
+        commandSender.sendMessage("The race " + racename + " has been added");
     }
 
 
