@@ -56,9 +56,31 @@ public class Race implements CommandExecutor {
                     processRemove(args);
                 }
                 break;
+            case "info":
+                if(isvalidInfo(args)){
+                    processInfo(args);
+                }
             default:
                 commandSender.sendMessage("There was an issue parsing the command. Please try again in the form /race <create|close|add|remove|list> <args>");
         }
+    }
+
+    private void processInfo(String[] args) {
+        commandSender.sendMessage("The current voting results of the race:  " + args[1]);
+        for(Candidate candidate : raceList.get(args[1].toLowerCase()).getCandidates()){
+            commandSender.sendMessage(candidate.toString());
+        }
+    }
+
+    private boolean isvalidInfo(String[] args) {
+        if(args.length != 2){
+            return false;
+        }
+        else if(raceList.containsKey(args[1].toLowerCase())){
+            return true;
+        }
+
+        return false;
     }
 
     private boolean isvalidRemove(String[] args) {

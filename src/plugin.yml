@@ -8,3 +8,6 @@ commands:
   race:
     description: allows for the manipulation of a race
     usage: /race
+  vote:
+    description: Allows users to vote in a political race
+    usage: /vote
