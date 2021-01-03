@@ -3,6 +3,8 @@ package com.yonatanwn.presidentialvoting;
 import org.bukkit.ChatColor;
 import org.bukkit.plugin.java.JavaPlugin;
 
+import java.util.List;
+
 
 public class Vote extends JavaPlugin {
     Race race = new Race(this);
@@ -12,9 +14,11 @@ public class Vote extends JavaPlugin {
         this.getCommand("race").setExecutor(race);
         this.getCommand("vote").setExecutor(voting);
         this.saveDefaultConfig();
+
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN+"[PresidentialVoting] has been enabled");
 
     }
+
 
     @Override
     public void onDisable() {
@@ -27,9 +31,4 @@ public class Vote extends JavaPlugin {
 }
 
 
-// Nominate A candidate
-// Candidate = Player on the server and vote count
-// Multiple Job races
-// vote on a existing candidate
-// Winner gets Presidential Perms
 

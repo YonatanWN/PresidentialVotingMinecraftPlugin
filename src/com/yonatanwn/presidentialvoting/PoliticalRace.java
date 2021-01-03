@@ -36,6 +36,14 @@ public class PoliticalRace {
         }
         return false;
     }
+    public boolean hasPlayerVote(Player player){
+        for(Candidate candidate: candidates){
+            if(candidate.hasVoteOfPlayer(player)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public int getMaxAmountOfCandidates(){
         return maxAmountOfCandidates;
@@ -44,4 +52,11 @@ public class PoliticalRace {
         return candidates;
     }
 
+    public void vote(Player voter, String candidate) {
+        for(Candidate bob: candidates){
+            if(bob.getCandidateName().equals(candidate)){
+                bob.vote(voter);
+            }
+        }
+    }
 }

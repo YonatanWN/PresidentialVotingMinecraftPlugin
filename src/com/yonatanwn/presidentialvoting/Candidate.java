@@ -25,4 +25,7 @@ public class Candidate {
         return player.getName();
     }
 
+    public boolean hasVoteOfPlayer(Player player) {
+        return votes.contains(player);
+    }
 }

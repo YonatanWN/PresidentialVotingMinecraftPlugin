@@ -24,7 +24,7 @@ public class Race implements CommandExecutor {
         this.commandSender = commandSender;
         if(args.length == 0){
             commandSender.sendMessage("Invalid Amount of arguments. Use the create, add, remove, or close subcommands.");
-            return false;
+            return true;
         }else{
             parseFirstSubCommand(args);
         }
@@ -60,6 +60,7 @@ public class Race implements CommandExecutor {
                 if(isvalidInfo(args)){
                     processInfo(args);
                 }
+                break;
             default:
                 commandSender.sendMessage("There was an issue parsing the command. Please try again in the form /race <create|close|add|remove|list> <args>");
         }
@@ -199,6 +200,13 @@ public class Race implements CommandExecutor {
         }
 
     }
+    public HashMap<String, PoliticalRace> getRaceList(){
+        return raceList;
+    }
 
 
+
+    public void put(String key, PoliticalRace politicalRace) {
+        raceList.put(key, politicalRace);
+    }
 }
