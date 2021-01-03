@@ -21,5 +21,8 @@ public class Candidate {
        return "The player " + player.getName() + " has " + votes.size() + " vote(s).";
     }
 
+    public String getCandidateName(){
+        return player.getName();
+    }
 
 }

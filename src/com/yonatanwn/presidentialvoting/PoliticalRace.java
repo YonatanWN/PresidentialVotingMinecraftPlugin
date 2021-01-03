@@ -3,6 +3,7 @@ package com.yonatanwn.presidentialvoting;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 public class PoliticalRace {
 
@@ -17,13 +18,24 @@ public class PoliticalRace {
         candidates.add(candidate);
     }
 
-    public void removeCandidate(Candidate candidate){
-        if(candidates.contains(candidate)){
-            candidates.remove(candidate);
+    public void removeCandidate(String playerName){
+        Iterator iterator = candidates.iterator();
+        while(iterator.hasNext()){
+            Candidate candidate = (Candidate) iterator.next();
+            if(candidate.getCandidateName().equalsIgnoreCase(playerName)){
+                iterator.remove();
+            }
         }
     }
 
-
+    public boolean containsPlayer(String playerName){
+        for(Candidate candidate : candidates){
+            if(candidate.getCandidateName().equalsIgnoreCase(playerName)){
+                return true;
+            }
+        }
+        return false;
+    }
 
     public int getMaxAmountOfCandidates(){
         return maxAmountOfCandidates;

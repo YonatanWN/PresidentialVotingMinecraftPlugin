@@ -52,46 +52,78 @@ public class Race implements CommandExecutor {
                 processList();
                 break;
             case "remove":
+                if(isvalidRemove(args)){
+                    processRemove(args);
+                }
                 break;
             default:
-                commandSender.sendMessage("There was an issue parsing the command. Please try again in the form /race <subcommand> <args>");
+                commandSender.sendMessage("There was an issue parsing the command. Please try again in the form /race <create|close|add|remove|list> <args>");
         }
+    }
+
+    private boolean isvalidRemove(String[] args) {
+        if(!raceList.containsKey(args[2].toLowerCase())){
+            commandSender.sendMessage(ChatColor.RED + "The race " + args[2] + " does not exist.");
+            return false;
+        }else if(!raceList.get(args[2]).containsPlayer(args[1])){
+            commandSender.sendMessage(ChatColor.RED + "The player " + args[1] + " is not running in the political race: " + args[2]);
+            return false;
+        }
+
+            return true;
+    }
+    private void processRemove(String[] args){
+        raceList.get(args[2].toLowerCase()).removeCandidate(args[1]);
+        commandSender.sendMessage(ChatColor.GREEN + "The candidate "+ args[1] + " has been removed from the race: " + args[2]);
     }
 
     private void processList() {
-        for(String key: raceList.keySet()){
-            commandSender.sendMessage(key + ": " + raceList.get(key).getMaxAmountOfCandidates()+ " candidate maximum" );
+        if(raceList.isEmpty()){
+            commandSender.sendMessage("There are currently no active races");
+        }else{
+            for(String key: raceList.keySet()){
+                commandSender.sendMessage(ChatColor.GREEN + key + ": " + raceList.get(key).getMaxAmountOfCandidates()+ " candidate maximum" );
+                for(Candidate candidate : raceList.get(key).getCandidates()){
+                    commandSender.sendMessage(candidate.toString());
+                }
+
+            }
         }
+
     }
 
     private void processAdd(String[] args) {
-        commandSender.sendMessage("This add command wil be processed");
+        raceList.get(args[2].toLowerCase()).addCandidate(new Candidate(Bukkit.getPlayer(args[1])));
     }
 
     private boolean isvalidAdd(String[] args) {
-        if(args.length != 2){
+        if(args.length != 3){
+            commandSender.sendMessage(ChatColor.RED + "There is an invalid amount of arguments for an Add subcommand");
+            return false;
+        }else if(Bukkit.getPlayer(args[1]) == null){
+            commandSender.sendMessage(ChatColor.RED + "The player " + args[1] + " could not be found");
+            return false;
+        }else if(!raceList.containsKey(args[2].toLowerCase())){
+            commandSender.sendMessage(ChatColor.RED + "The race " + args[2] + "does not exist");
+            return false;
+        }else if(raceList.get(args[2].toLowerCase()).getCandidates().size() >= raceList.get(args[2].toLowerCase()).getMaxAmountOfCandidates()){
+            commandSender.sendMessage(ChatColor.RED + "The race " +  args[2] + " is full");
             return false;
         }else{
-            if(Bukkit.getPlayer(args[2]) != null && raceList.get(args[1]).getCandidates().size() < raceList.get(args[1]).getMaxAmountOfCandidates() ){
-                return true;
-            }else{
-                return false;
-            }
-
+            return true;
         }
-
 
     }
 
     private void processCloseRace(String[] args) {
-        for(String key : raceList.keySet()){
-            if(args[1] == key){
-                PoliticalRace politicalRace = raceList.get(args[1]);
-                for(Candidate candidate: politicalRace.getCandidates()) {
-                    commandSender.sendMessage(ChatColor.GREEN + candidate.toString());
-                }
+        commandSender.sendMessage("The race " + args[1] + " has been closed");
+        if(!raceList.get(args[1]).getCandidates().isEmpty()){
+            commandSender.sendMessage("The final results of " + args[1]);
+            for(Candidate candidate : raceList.get(args[1]).getCandidates()){
+                commandSender.sendMessage(candidate.toString());
             }
         }
+        raceList.remove(args[1].toLowerCase());
     }
 
     private boolean isvalidCreateRace(String[] args) {
@@ -124,6 +156,14 @@ public class Race implements CommandExecutor {
 
     }
 
+
+    private void processCreateRace(String[] args) {
+        String racename = args[1].toLowerCase();
+        int raceMaxCandidates = Integer.parseInt(args[2]);
+        raceList.put(racename,new PoliticalRace(raceMaxCandidates));
+        commandSender.sendMessage(ChatColor.GREEN + "The race " + racename + " has been added");
+    }
+
     private boolean isPositiveInteger(String commandInt) {
         try{
             int integer = Integer.parseInt(commandInt);
@@ -136,19 +176,6 @@ public class Race implements CommandExecutor {
             return false;
         }
 
-    }
-
-    private void processCreateRace(String[] args) {
-        String racename = args[1].toLowerCase();
-        int raceMaxCandidates = Integer.parseInt(args[2]);
-        raceList.put(racename,new PoliticalRace(raceMaxCandidates));
-        commandSender.sendMessage("The race " + racename + " has been added");
-    }
-
-
-
-    public HashMap<String, PoliticalRace> getRaceList(){
-        return raceList;
     }
 
 
