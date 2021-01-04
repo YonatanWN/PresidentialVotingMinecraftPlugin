@@ -2,19 +2,23 @@ package com.yonatanwn.presidentialvoting;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
-import org.bukkit.entity.Player;
+import org.bukkit.command.TabCompleter;
+import org.bukkit.util.StringUtil;
 
+
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 
 
-public class Race implements CommandExecutor {
+
+public class Race implements CommandExecutor,TabCompleter {
     private HashMap<String, PoliticalRace> raceList = new HashMap<>();
+    List<String> subCommands = Arrays.asList("list","info","create", "close", "add","remove");
     private CommandSender commandSender;
     private Vote vote;
     public Race(Vote vote){
@@ -219,4 +223,15 @@ public class Race implements CommandExecutor {
         return raceList.get(raceName).getCandidates();
     }
 
+    @Override
+    public List<String> onTabComplete(CommandSender commandSender, Command command, String s, String[] strings) {
+       if(strings.length == 0){
+           return subCommands;
+       }else if(strings.length == 1){
+           List<String> suggestion = new ArrayList<>();
+           StringUtil.copyPartialMatches(strings[0],subCommands,suggestion);
+           return suggestion;
+       }
+       return null;
+    }
 }

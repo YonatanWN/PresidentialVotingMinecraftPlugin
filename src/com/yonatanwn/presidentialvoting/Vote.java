@@ -16,8 +16,9 @@ public class Vote extends JavaPlugin {
     @Override
     public void onEnable() {
         this.getCommand("race").setExecutor(race);
+        this.getCommand("race").setTabCompleter(race);
         this.getCommand("vote").setExecutor(voting);
-
+        this.getCommand("vote").setTabCompleter(voting);
         loadRacesAndVotes();
         getServer().getConsoleSender().sendMessage(ChatColor.GREEN+"[PresidentialVoting] has been enabled");
 
