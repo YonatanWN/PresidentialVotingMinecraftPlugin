@@ -1,9 +1,11 @@
 package com.yonatanwn.presidentialvoting;
 
+import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.List;
 
 public class PoliticalRace {
 
@@ -48,7 +50,7 @@ public class PoliticalRace {
     public int getMaxAmountOfCandidates(){
         return maxAmountOfCandidates;
     }
-    public ArrayList<Candidate> getCandidates(){
+    public List<Candidate> getCandidates(){
         return candidates;
     }
 

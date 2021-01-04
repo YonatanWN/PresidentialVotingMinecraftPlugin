@@ -2,12 +2,14 @@ package com.yonatanwn.presidentialvoting;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 
 
@@ -116,14 +118,14 @@ public class Race implements CommandExecutor {
     }
 
     private void processAdd(String[] args) {
-        raceList.get(args[2].toLowerCase()).addCandidate(new Candidate(Bukkit.getPlayer(args[1])));
+        raceList.get(args[2].toLowerCase()).addCandidate(new Candidate(Bukkit.getOfflinePlayer(args[1])));
     }
 
     private boolean isvalidAdd(String[] args) {
         if(args.length != 3){
             commandSender.sendMessage(ChatColor.RED + "There is an invalid amount of arguments for an Add subcommand");
             return false;
-        }else if(Bukkit.getPlayer(args[1]) == null){
+        }else if(Bukkit.getOfflinePlayer(args[1]) == null){
             commandSender.sendMessage(ChatColor.RED + "The player " + args[1] + " could not be found");
             return false;
         }else if(!raceList.containsKey(args[2].toLowerCase())){
@@ -205,8 +207,16 @@ public class Race implements CommandExecutor {
     }
 
 
-
-    public void put(String key, PoliticalRace politicalRace) {
-        raceList.put(key, politicalRace);
+    public void addPoliticalRace(String s, int parseInt) {
+        raceList.put(s, new PoliticalRace(parseInt));
     }
+
+    public void addCandidate(String racename, Candidate candidate) {
+        raceList.get(racename).addCandidate(candidate);
+    }
+
+    public List<Candidate> getCandidates(String raceName) {
+        return raceList.get(raceName).getCandidates();
+    }
+
 }
