@@ -1,5 +1,5 @@
 name: PresidentialVoting
-version: 0.0.1
+version: 1.0.0
 author: YonatanWN
 main: com.yonatanwn.presidentialvoting.Vote
 api-version: 1.16

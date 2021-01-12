@@ -231,7 +231,17 @@ public class Race implements CommandExecutor,TabCompleter {
            List<String> suggestion = new ArrayList<>();
            StringUtil.copyPartialMatches(strings[0],subCommands,suggestion);
            return suggestion;
+       }else if(strings.length == 2){
+           List<String> suggestion = new ArrayList<>();
+           if(strings[0].equalsIgnoreCase("close")){
+               List<String> openRaces = (ArrayList<String>) raceList.keySet();
+               StringUtil.copyPartialMatches(strings[1],openRaces ,suggestion);
+               return suggestion;
+           }
        }
+
+
+
        return null;
     }
 }

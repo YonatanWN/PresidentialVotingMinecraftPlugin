@@ -15,6 +15,7 @@ public class Vote extends JavaPlugin {
     Voting voting = new Voting(this, race);
     @Override
     public void onEnable() {
+        saveDefaultConfig();
         this.getCommand("race").setExecutor(race);
         this.getCommand("race").setTabCompleter(race);
         this.getCommand("vote").setExecutor(voting);
